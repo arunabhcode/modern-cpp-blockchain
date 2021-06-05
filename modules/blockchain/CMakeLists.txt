@@ -3,14 +3,13 @@ project(mcb)
 
 
 set(PROJECT_SRCS
-)
-
-set(PROJECT_INCS
+  ${PROJECT_SOURCE_DIR}/src/block.cpp        
+  ${PROJECT_SOURCE_DIR}/src/block_chain.cpp        
 )
 
 find_package(spdlog REQUIRED)
 
-add_library(${PROJECT_NAME} SHARED ${PROJECT_SRCS} ${PROJECT_INCS})
+add_library(${PROJECT_NAME} SHARED ${PROJECT_SRCS})
 
 target_include_directories(${PROJECT_NAME} PUBLIC
                           $<BUILD_INTERFACE:${PROJECT_SOURCE_DIR}/include>
