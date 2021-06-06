@@ -9,16 +9,33 @@
 
 namespace mcb
 {
-Block::Block(const std::string& block_msg, const std::string& prev_hash)
-    : block_data_(block_msg.begin(), block_msg.end()), prev_hash_(prev_hash)
+Block::Block(const std::string& block_msg,
+             const std::string& prev_hash,
+             const uint64_t nonce)
+    : block_data_(block_msg.begin(), block_msg.end())
+    , prev_hash_(prev_hash)
+    , nonce_(nonce)
 {
   CalcHash();
+}
+
+void Block::AppendStringToByteVector(const std::string& str,
+                                     std::vector<uint8_t>& vec)
+{
+  std::copy(str.begin(), str.end(), std::back_inserter(vec));
 }
 
 void Block::CalcHash()
 {
   std::vector<uint8_t> hash_vec(block_data_.begin(), block_data_.end());
-  std::copy(prev_hash_.begin(), prev_hash_.end(), std::back_inserter(hash_vec));
+
+  AppendStringToByteVector(prev_hash_, hash_vec);
+
+  std::stringstream stream;
+  stream << std::hex << nonce_;
+  std::string nonce_hex_str(stream.str());
+  AppendStringToByteVector(nonce_hex_str, hash_vec);
+
   picosha2::hash256_hex_string(hash_vec, hash_);
 }
 
@@ -31,6 +48,11 @@ void Block::SetData(const std::string& block_msg)
 void Block::SetPrevHash(const std::string& prev_hash)
 {
   prev_hash_ = prev_hash;
+}
+
+void Block::SetNonce(const uint64_t nonce)
+{
+  nonce_ = nonce;
 }
 
 std::string Block::GetHash() const
@@ -46,6 +68,11 @@ std::string Block::GetPrevHash() const
 std::string Block::GetData() const
 {
   return std::string(block_data_.begin(), block_data_.end());
+}
+
+uint64_t Block::GetNonce() const
+{
+  return nonce_;
 }
 
 }  // namespace mcb

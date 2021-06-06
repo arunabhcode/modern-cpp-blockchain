@@ -8,12 +8,12 @@ namespace mcb
 {
 BlockChain::BlockChain()
 {
-  blocks_.emplace_back(Block("GenesisBlock", ""));
+  blocks_.emplace_back(Block("GenesisBlock", "", 0));
 }
 
 void BlockChain::CreateBlock(const std::string& block_msg)
 {
-  blocks_.emplace_back(Block(block_msg, blocks_.back().GetHash()));
+  blocks_.emplace_back(Block(block_msg, blocks_.back().GetHash(), 0));
 }
 
 void BlockChain::PrintBlockChain()
@@ -24,6 +24,7 @@ void BlockChain::PrintBlockChain()
     spdlog::info("Previous hash: {}", b.GetPrevHash());
     spdlog::info("Block data: {}", b.GetData());
     spdlog::info("Block hash: {}", b.GetHash());
+    spdlog::info("Block nonce: {}", b.GetNonce());
     spdlog::info("--------------");
   }
 }
