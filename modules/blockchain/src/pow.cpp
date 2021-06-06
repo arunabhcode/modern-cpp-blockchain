@@ -2,10 +2,11 @@
 
 #include "mcb/pow.h"
 
+#include <cmath>
+#include <iomanip>
 #include <limits>
 #include <sstream>
 
-#include "boost/multiprecision/cpp_int.hpp"
 #include "spdlog/spdlog.h"
 
 namespace mcb
@@ -17,11 +18,12 @@ Pow::Pow(const int lead_zeros)
     throw std::domain_error("Number of leading zeros can't be bigger than 256");
   }
 
-  boost::multiprecision::uint256_t one         = 1;
-  boost::multiprecision::uint256_t hash_number = (one << (256 - lead_zeros));
   std::stringstream ss;
-  ss << std::setfill('0') << std::setw(64) << std::hex << hash_number;
+  ss << std::setfill('0') << std::setw(64) << std::hex << 0;
   target_hash_ = ss.str();
+  int hash_idx = (lead_zeros / 4) > 0 ? lead_zeros / 4 - 1 : lead_zeros / 4;
+  target_hash_[hash_idx] =
+      std::to_string(std::pow(2, (4 - (lead_zeros % 4))))[0];
   spdlog::info("Target hash: {}", target_hash_);
 }
 
@@ -36,7 +38,6 @@ bool Pow::HexGreater(const std::string &s1, const std::string &s2)
   {
     return true;
   }
-
   return false;
 }
 
@@ -49,6 +50,7 @@ void Pow::MineBlock(Block &block)
     if (HexGreater(target_hash_, block.GetHash()))
     {
       spdlog::info("Block hash found");
+      block.PrintBlock();
       return;
     }
   }

@@ -30,6 +30,8 @@ class Block
   std::string GetData() const;
   uint64_t GetNonce() const;
 
+  void PrintBlock() const;
+
  private:
   std::string hash_;
   std::vector<uint8_t> block_data_;

@@ -5,6 +5,8 @@
 #include <string>
 #include <vector>
 
+#include "spdlog/spdlog.h"
+
 #include "hash/picosha2.h"
 
 namespace mcb
@@ -73,6 +75,17 @@ std::string Block::GetData() const
 uint64_t Block::GetNonce() const
 {
   return nonce_;
+}
+
+void Block::PrintBlock() const
+{
+  spdlog::info("--------------");
+  spdlog::info("Previous hash: {}", prev_hash_);
+  spdlog::info("Block data: {}",
+               std::string(block_data_.begin(), block_data_.end()));
+  spdlog::info("Block hash: {}", hash_);
+  spdlog::info("Block nonce: {}", nonce_);
+  spdlog::info("--------------");
 }
 
 }  // namespace mcb

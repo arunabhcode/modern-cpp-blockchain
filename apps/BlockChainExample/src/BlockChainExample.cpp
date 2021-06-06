@@ -7,7 +7,6 @@ int main()
   mcb::BlockChain bc_inst(8);
   bc_inst.CreateBlock("Hello, ");
   bc_inst.CreateBlock("World!");
-  bc_inst.PrintBlockChain();
 
   return 0;
 }
