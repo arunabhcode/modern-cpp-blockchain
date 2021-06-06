@@ -16,7 +16,7 @@ class BlockChain
   BlockChain();
   ~BlockChain() = default;
 
-  void CreateBlock(const std::string& block_msg);
+  void CreateBlock(const std::string &block_msg);
   void PrintBlockChain();
 
  private:
