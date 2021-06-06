@@ -16,7 +16,6 @@ class Pow
   explicit Pow(const int lead_zeros);
   ~Pow() = default;
 
-  bool HexGreater(const std::string& s1, const std::string& s2);
   void MineBlock(Block& block);
   bool ValidateBlock(const Block& block);
 
