@@ -5,6 +5,7 @@
 #include <limits>
 #include <sstream>
 
+#include "boost/multiprecision/cpp_int.hpp"
 #include "spdlog/spdlog.h"
 
 namespace mcb
@@ -16,9 +17,12 @@ Pow::Pow(const int lead_zeros)
     throw std::domain_error("Number of leading zeros can't be bigger than 256");
   }
 
+  boost::multiprecision::uint256_t one         = 1;
+  boost::multiprecision::uint256_t hash_number = (one << (256 - lead_zeros));
   std::stringstream ss;
-  ss << std::hex << (1 << (256 - lead_zeros));
+  ss << std::setfill('0') << std::setw(64) << std::hex << hash_number;
   target_hash_ = ss.str();
+  spdlog::info("Target hash: {}", target_hash_);
 }
 
 bool Pow::HexGreater(const std::string &s1, const std::string &s2)

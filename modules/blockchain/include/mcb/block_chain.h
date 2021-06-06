@@ -7,13 +7,15 @@
 #include <vector>
 
 #include "mcb/block.h"
+#include "mcb/pow.h"
 
 namespace mcb
 {
 class BlockChain
 {
  public:
-  BlockChain();
+  BlockChain() = delete;
+  explicit BlockChain(const int lead_zeros);
   ~BlockChain() = default;
 
   void CreateBlock(const std::string &block_msg);
@@ -21,6 +23,7 @@ class BlockChain
 
  private:
   std::vector<Block> blocks_;
+  Pow pow_inst_;
 };
 
 }  // namespace mcb
