@@ -13,9 +13,14 @@ namespace mcb
 {
 Pow::Pow(const int lead_zeros)
 {
-  if (lead_zeros > 256)
+  GenerateTargetHash(lead_zeros);
+}
+
+void Pow::GenerateTargetHash(const int lead_zeros)
+{
+  if (lead_zeros >= 256)
   {
-    throw std::domain_error("Number of leading zeros can't be bigger than 256");
+    throw std::domain_error("Number of leading zeros can't be bigger than 255");
   }
 
   std::stringstream ss;

@@ -16,6 +16,7 @@ class Pow
   explicit Pow(const int lead_zeros);
   ~Pow() = default;
 
+  void GenerateTargetHash(const int lead_zeros);
   void MineBlock(Block& block);
   bool ValidateBlock(const Block& block);
 
