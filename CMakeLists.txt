@@ -33,9 +33,17 @@ file(WRITE ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}Config.cmake
     "include(CMakeFindDependencyMacro)\n"
     "include(\${CMAKE_CURRENT_LIST_DIR}/${CMAKE_PROJECT_NAME}Targets.cmake)\n")
 
+# These four lines have to be in a separate cmakelists otherwise discover_tests 
+# doesn't work
+set(DEFAULT_GTEST_DIR "/usr/src/gtest")
+add_subdirectory(${DEFAULT_GTEST_DIR} ${CMAKE_BINARY_DIR}/gtest)
+include(GoogleTest)
+enable_testing()
+
 add_subdirectory(modules)
 add_subdirectory(apps)
 add_subdirectory(doc)
+add_subdirectory(test)
 
 install(FILES ${CMAKE_BINARY_DIR}/${CMAKE_PROJECT_NAME}Config.cmake
         DESTINATION lib/cmake/${CMAKE_PROJECT_NAME})

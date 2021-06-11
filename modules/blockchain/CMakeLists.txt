@@ -6,6 +6,7 @@ set(PROJECT_SRCS
   ${PROJECT_SOURCE_DIR}/src/block.cpp        
   ${PROJECT_SOURCE_DIR}/src/block_chain.cpp        
   ${PROJECT_SOURCE_DIR}/src/pow.cpp        
+  ${PROJECT_SOURCE_DIR}/src/codec.cpp        
 )
 
 find_package(spdlog REQUIRED)
