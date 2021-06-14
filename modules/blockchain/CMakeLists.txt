@@ -7,9 +7,11 @@ set(PROJECT_SRCS
   ${PROJECT_SOURCE_DIR}/src/block_chain.cpp        
   ${PROJECT_SOURCE_DIR}/src/pow.cpp        
   ${PROJECT_SOURCE_DIR}/src/codec.cpp        
+  ${PROJECT_SOURCE_DIR}/src/db.cpp        
 )
 
 find_package(spdlog REQUIRED)
+find_package(leveldb REQUIRED)
 
 add_library(${PROJECT_NAME} SHARED ${PROJECT_SRCS})
 
@@ -18,7 +20,8 @@ target_include_directories(${PROJECT_NAME} PUBLIC
                           $<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/include>)
 
 target_link_libraries(${PROJECT_NAME}
-                      spdlog::spdlog)
+                      spdlog::spdlog
+                      leveldb::leveldb)
 
 install(TARGETS ${PROJECT_NAME}
         EXPORT ${CMAKE_PROJECT_NAME}Targets
