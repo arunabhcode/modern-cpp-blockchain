@@ -23,11 +23,13 @@ class DbWrapper
   bool Write(const std::string& key, const std::string& value);
   bool Read(const std::string& key, std::string& value);
   bool Remove(const std::string& key);
+  bool Iterate(std::string& value);
 
  private:
   leveldb::DB* db_;
   leveldb::Options options_;
   std::string db_dir_;
+  std::unique_ptr<leveldb::Iterator> db_it_;
 };
 
 }  // namespace mcb

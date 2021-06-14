@@ -7,7 +7,8 @@
 
 namespace mcb
 {
-DbWrapper::DbWrapper(const std::string& db_dir) : db_dir_(db_dir)
+DbWrapper::DbWrapper(const std::string& db_dir)
+    : db_dir_(db_dir), db_it_(db_->NewIterator(leveldb::ReadOptions()))
 {
   options_.create_if_missing = true;
   if (!OpenDatabase())
@@ -49,6 +50,13 @@ bool DbWrapper::Remove(const std::string& key)
 {
   leveldb::Status s = db_->Delete(leveldb::WriteOptions(), key);
   return s.ok();
+}
+
+bool DbWrapper::Iterate(std::string& value)
+{
+  db_it_->SeekToFirst();
+  value = db_it_->value().ToString();
+  return db_it_->Valid();
 }
 
 }  // namespace mcb
