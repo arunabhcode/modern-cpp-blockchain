@@ -29,7 +29,7 @@ class DbWrapper
   leveldb::DB* db_;
   leveldb::Options options_;
   std::string db_dir_;
-  std::unique_ptr<leveldb::Iterator> db_it_;
+  leveldb::Iterator* db_it_;
 };
 
 }  // namespace mcb
