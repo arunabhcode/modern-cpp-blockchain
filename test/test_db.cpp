@@ -1,9 +1,9 @@
 // Copyright 2021 Arunabh Sharma
 
 #include "gtest/gtest.h"
-#include "spdlog/spdlog.h"
 
 #include "mcb/db.h"
+#include "mcb/logger.h"
 
 class DbTest : public ::testing::Test
 {
@@ -91,6 +91,8 @@ TEST_F(DbTest, RemoveGood)
 
 int main(int argc, char** argv)
 {
+  spdlog::cfg::load_env_levels();
+  spdlog::set_pattern("%^[%l][%s:%#][%!]%$ %v");
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

@@ -5,7 +5,7 @@
 #include <exception>
 #include <system_error>
 
-#include "spdlog/spdlog.h"
+#include "mcb/logger.h"
 
 namespace mcb
 {
@@ -42,12 +42,14 @@ void DbWrapper::CloseDatabase()
 bool DbWrapper::Write(const std::string& key, const std::string& value)
 {
   leveldb::Status s = db_->Put(leveldb::WriteOptions(), key, value);
+  SPDLOG_DEBUG("Valid = {}, Key = {}, Value = {}", s.ok(), key, value);
   return s.ok();
 }
 
 bool DbWrapper::Read(const std::string& key, std::string& value)
 {
   leveldb::Status s = db_->Get(leveldb::ReadOptions(), key, &value);
+  SPDLOG_DEBUG("Valid = {}, Key = {}, Value = {}", s.ok(), key, value);
   return s.ok();
 }
 
@@ -62,6 +64,7 @@ bool DbWrapper::Iterate(std::string& value)
   if (!IsEmpty())
   {
     value = db_it_->value().ToString();
+    SPDLOG_DEBUG("Iterated value = {}", value);
     db_it_->Next();
     return true;
   }

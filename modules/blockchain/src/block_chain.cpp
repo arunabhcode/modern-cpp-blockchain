@@ -4,9 +4,8 @@
 
 #include "mcb/block_chain.h"
 
-#include "spdlog/spdlog.h"
-
 #include "mcb/codec.h"
+#include "mcb/logger.h"
 
 namespace mcb
 {

@@ -7,7 +7,7 @@
 #include <regex>
 #include <vector>
 
-#include "spdlog/spdlog.h"
+#include "mcb/logger.h"
 
 namespace mcb
 {

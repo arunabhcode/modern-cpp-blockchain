@@ -3,11 +3,11 @@
 #include <vector>
 
 #include "gtest/gtest.h"
-#include "spdlog/spdlog.h"
 
 #include "mcb/block.h"
 #include "mcb/codec.h"
 #include "mcb/db.h"
+#include "mcb/logger.h"
 
 class CodecTest : public ::testing::Test
 {
@@ -53,6 +53,8 @@ TEST_F(CodecTest, EncodeDecodeGood)
 
 int main(int argc, char** argv)
 {
+  spdlog::cfg::load_env_levels();
+  spdlog::set_pattern("%^[%l][%s:%#][%!]%$ %v");
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
 }

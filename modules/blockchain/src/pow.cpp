@@ -7,7 +7,7 @@
 #include <limits>
 #include <sstream>
 
-#include "spdlog/spdlog.h"
+#include "mcb/logger.h"
 
 namespace mcb
 {
