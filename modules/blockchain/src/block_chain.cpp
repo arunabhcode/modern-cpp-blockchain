@@ -1,5 +1,7 @@
 // Copyright 2021 Arunabh Sharma
 
+#define SPDLOG_ACTIVE_LEVEL SPDLOG_LEVEL_TRACE
+
 #include "mcb/block_chain.h"
 
 #include "spdlog/spdlog.h"

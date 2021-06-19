@@ -13,7 +13,7 @@ namespace mcb
 {
 void Codec::Encode(const Block& block, std::string& encode_str)
 {
-  encode_str = block.GetData() + "," + block.GetPrevHash() + "," +
+  encode_str = block.GetData() + "~^" + block.GetPrevHash() + "~^" +
                std::to_string(block.GetNonce());
 }
 
@@ -35,7 +35,7 @@ std::vector<std::string> Codec::Tokenize(const std::string& str,
 
 void Codec::Decode(const std::string& decode_str, Block& block)
 {
-  std::regex re(R"([,]+)");
+  std::regex re(R"([~^]+)");
   std::vector<std::string> decode_vec = Tokenize(decode_str, re);
   block.SetData(decode_vec[0]);
   block.SetPrevHash(decode_vec[1]);
