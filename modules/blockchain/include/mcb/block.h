@@ -21,6 +21,7 @@ class Block
                                 std::vector<uint8_t>& vec);
   void CalcHash();
 
+  void SetHash(const std::string& hash);
   void SetData(const std::string& block_msg);
   void SetPrevHash(const std::string& prev_hash);
   void SetNonce(const uint64_t nonce);

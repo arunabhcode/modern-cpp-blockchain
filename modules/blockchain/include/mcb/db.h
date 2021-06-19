@@ -24,6 +24,7 @@ class DbWrapper
   bool Read(const std::string& key, std::string& value);
   bool Remove(const std::string& key);
   bool Iterate(std::string& value);
+  bool IsEmpty();
 
  private:
   leveldb::DB* db_;

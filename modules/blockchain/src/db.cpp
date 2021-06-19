@@ -5,6 +5,8 @@
 #include <exception>
 #include <system_error>
 
+#include "spdlog/spdlog.h"
+
 namespace mcb
 {
 DbWrapper::DbWrapper(const std::string& db_dir) : db_dir_(db_dir)
@@ -13,6 +15,7 @@ DbWrapper::DbWrapper(const std::string& db_dir) : db_dir_(db_dir)
   if (!OpenDatabase())
   {
     std::error_code ec = make_error_code(std::errc::io_error);
+    SPDLOG_ERROR("Opening database failed");
     throw std::system_error(ec, std::string("Opening database failed").c_str());
   }
 }
@@ -56,7 +59,7 @@ bool DbWrapper::Remove(const std::string& key)
 
 bool DbWrapper::Iterate(std::string& value)
 {
-  if (db_it_->Valid())
+  if (!IsEmpty())
   {
     value = db_it_->value().ToString();
     db_it_->Next();
@@ -64,4 +67,10 @@ bool DbWrapper::Iterate(std::string& value)
   }
   return false;
 }
+
+bool DbWrapper::IsEmpty()
+{
+  return !db_it_->Valid();
+}
+
 }  // namespace mcb

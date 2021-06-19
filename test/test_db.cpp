@@ -17,7 +17,7 @@ class DbTest : public ::testing::Test
   mcb::DbWrapper db_inst_;
 };
 
-DbTest::DbTest() : db_inst_("/tmp/blocks")
+DbTest::DbTest() : db_inst_("/tmp/test_blocks")
 {
 }
 

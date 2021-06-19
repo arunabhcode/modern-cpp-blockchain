@@ -20,6 +20,7 @@ void Pow::GenerateTargetHash(const int lead_zeros)
 {
   if (lead_zeros >= 256)
   {
+    SPDLOG_ERROR("Number of leading zeros can't be bigger than 255");
     throw std::domain_error("Number of leading zeros can't be bigger than 255");
   }
 
@@ -29,7 +30,7 @@ void Pow::GenerateTargetHash(const int lead_zeros)
   int hash_idx = (lead_zeros / 4) > 0 ? lead_zeros / 4 - 1 : lead_zeros / 4;
   target_hash_[hash_idx] =
       std::to_string(std::pow(2, (4 - (lead_zeros % 4))))[0];
-  spdlog::info("Target hash: {}", target_hash_);
+  SPDLOG_INFO("Target hash: {}", target_hash_);
 }
 
 void Pow::MineBlock(Block &block)
@@ -40,7 +41,7 @@ void Pow::MineBlock(Block &block)
     block.CalcHash();
     if (target_hash_ > block.GetHash())
     {
-      spdlog::info("Block hash found");
+      SPDLOG_INFO("Block hash found");
       block.PrintBlock();
       return;
     }

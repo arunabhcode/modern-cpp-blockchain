@@ -41,6 +41,11 @@ void Block::CalcHash()
   picosha2::hash256_hex_string(hash_vec, hash_);
 }
 
+void Block::SetHash(const std::string& hash)
+{
+  hash_ = hash;
+}
+
 void Block::SetData(const std::string& block_msg)
 {
   std::copy(
@@ -79,13 +84,13 @@ uint64_t Block::GetNonce() const
 
 void Block::PrintBlock() const
 {
-  spdlog::info("--------------");
-  spdlog::info("Previous hash: {}", prev_hash_);
-  spdlog::info("Block data: {}",
-               std::string(block_data_.begin(), block_data_.end()));
-  spdlog::info("Block hash: {}", hash_);
-  spdlog::info("Block nonce: {}", nonce_);
-  spdlog::info("--------------");
+  SPDLOG_INFO("--------------");
+  SPDLOG_INFO("Previous hash: {}", prev_hash_);
+  SPDLOG_INFO("Block data: {}",
+              std::string(block_data_.begin(), block_data_.end()));
+  SPDLOG_INFO("Block hash: {}", hash_);
+  SPDLOG_INFO("Block nonce: {}", nonce_);
+  SPDLOG_INFO("--------------");
 }
 
 }  // namespace mcb
