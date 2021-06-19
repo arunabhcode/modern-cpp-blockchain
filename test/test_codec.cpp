@@ -7,6 +7,7 @@
 
 #include "mcb/block.h"
 #include "mcb/codec.h"
+#include "mcb/db.h"
 
 class CodecTest : public ::testing::Test
 {
@@ -18,7 +19,10 @@ class CodecTest : public ::testing::Test
   void TearDown() override;
 };
 
-CodecTest::CodecTest()  = default;
+CodecTest::CodecTest()
+{
+}
+
 CodecTest::~CodecTest() = default;
 
 void CodecTest::SetUp()
@@ -34,12 +38,15 @@ TEST_F(CodecTest, EncodeDecodeGood)
   mcb::Block encode_block("hello", "world", 0);
   std::string encode_string;
   mcb::Codec::Encode(encode_block, encode_string);
-  spdlog::info("Encode string : {}", encode_string);
 
-  std::string decode_string(encode_string);
   mcb::Block decode_block;
+  std::string decode_string(encode_string);
   mcb::Codec::Decode(decode_string, decode_block);
-  spdlog::info("Decode block data : {}", decode_block.GetData());
+
+  ASSERT_EQ(encode_block.GetHash(), decode_block.GetHash());
+  ASSERT_EQ(encode_block.GetPrevHash(), decode_block.GetPrevHash());
+  ASSERT_EQ(encode_block.GetData(), decode_block.GetData());
+  ASSERT_EQ(encode_block.GetNonce(), decode_block.GetNonce());
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
