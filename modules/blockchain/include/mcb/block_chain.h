@@ -28,6 +28,7 @@ class BlockChain
   std::vector<Block> blocks_;
   Pow pow_inst_;
   DbWrapper db_inst_;
+  uint64_t db_count_key_;
 };
 
 }  // namespace mcb

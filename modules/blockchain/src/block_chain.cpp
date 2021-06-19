@@ -10,7 +10,7 @@
 namespace mcb
 {
 BlockChain::BlockChain(const int lead_zeros, const std::string& db_dir)
-    : pow_inst_(lead_zeros), db_inst_(db_dir)
+    : pow_inst_(lead_zeros), db_inst_(db_dir), db_count_key_(0)
 {
   Block genesis_block("GenesisBlock", "", 0);
   pow_inst_.MineBlock(genesis_block);
@@ -57,9 +57,10 @@ void BlockChain::InstantiateFromDatabase()
     db_inst_.Iterate(decode_str);
     SPDLOG_DEBUG(decode_str);
     mcb::Block decode_block;
-    Codec::Decode(decode_str, decode_block);
+    Codec::Decode(decode_str, blocks_.back().GetHash(), decode_block);
     decode_block.PrintBlock();
     blocks_.emplace_back(decode_block);
+    db_count_key_++;
   }
 }
 
@@ -68,7 +69,9 @@ bool BlockChain::AddToDatabase(const Block& block)
   std::string encode_str;
   Codec::Encode(block, encode_str);
   SPDLOG_DEBUG(encode_str);
-  return db_inst_.Write(block.GetHash(), encode_str);
+  bool write_status = db_inst_.Write(std::to_string(db_count_key_), encode_str);
+  db_count_key_++;
+  return write_status;
 }
 
 }  // namespace mcb

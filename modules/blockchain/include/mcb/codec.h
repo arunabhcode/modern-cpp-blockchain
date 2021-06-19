@@ -19,7 +19,9 @@ class Codec
   static void Encode(const Block& block, std::string& byte_buffer);
   static std::vector<std::string> Tokenize(const std::string& str,
                                            const std::regex& re);
-  static void Decode(const std::string& byte_buffer, Block& block);
+  static void Decode(const std::string& byte_buffer,
+                     const std::string& prev_hash,
+                     Block& block);
 };
 
 }  // namespace mcb

@@ -41,7 +41,7 @@ TEST_F(CodecTest, EncodeDecodeGood)
 
   mcb::Block decode_block;
   std::string decode_string(encode_string);
-  mcb::Codec::Decode(decode_string, decode_block);
+  mcb::Codec::Decode(decode_string, "world", decode_block);
 
   ASSERT_EQ(encode_block.GetHash(), decode_block.GetHash());
   ASSERT_EQ(encode_block.GetPrevHash(), decode_block.GetPrevHash());
