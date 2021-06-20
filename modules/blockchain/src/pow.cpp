@@ -18,7 +18,7 @@ Pow::Pow(const int lead_zeros)
 
 void Pow::GenerateTargetHash(const int lead_zeros)
 {
-  if (lead_zeros >= 256)
+  if (lead_zeros > 255)
   {
     SPDLOG_ERROR("Number of leading zeros can't be bigger than 255");
     throw std::domain_error("Number of leading zeros can't be bigger than 255");
@@ -30,7 +30,7 @@ void Pow::GenerateTargetHash(const int lead_zeros)
   int hash_idx = (lead_zeros / 4) > 0 ? lead_zeros / 4 - 1 : lead_zeros / 4;
   target_hash_[hash_idx] =
       std::to_string(std::pow(2, (4 - (lead_zeros % 4))))[0];
-  SPDLOG_INFO("Target hash: {}", target_hash_);
+  SPDLOG_DEBUG("Target hash: {}", target_hash_);
 }
 
 void Pow::MineBlock(Block &block)
